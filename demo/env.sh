@@ -5,7 +5,7 @@
 case ${OSTYPE} in
   darwin*)
     IP_ADDRESS=$(ipconfig getifaddr en0)
-    #IP_ADDRESS=0.0.0.0
+    echo $IP_ADDRESS
   ;;
   linux-gnu)
     IP_ADDRESS=$(ifconfig eth0 | grep inet | grep -v inet6 | awk '{print $2}')
@@ -38,7 +38,8 @@ export TRANSIT_PATH=transit-blog
 export DB_PATH=db-blog
 
 # LDAP Server settings
-export LDAP_HOST=${LDAP_HOST:-${IP_ADDRESS}}
+#export LDAP_HOST=${LDAP_HOST:-${IP_ADDRESS}}
+export LDAP_HOST=${IP_ADDRESS}
 export LDAP_URL="ldap://${LDAP_HOST}"
 export LDAP_ORGANISATION=${LDAP_ORGANISATION:-"OurCorp Inc"}
 export LDAP_DOMAIN=${LDAP_DOMAIN:-"ourcorp.com"}
