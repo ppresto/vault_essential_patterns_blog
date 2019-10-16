@@ -11,6 +11,11 @@ path "kv-blog/data/it"
   capabilities = ["create", "read", "update", "delete", "list"]
 }
 
+path "kv-blog/*"
+{
+  capabilities = ["list"]
+}
+
 
 # Allow deletion of any kv-blog version
 path "kv-blog/delete/it/*"

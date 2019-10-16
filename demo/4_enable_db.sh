@@ -1,10 +1,10 @@
 . env.sh
 
 echo
-cyan "Enabling database engine"
+green "Enable the Engine"
 pe "vault secrets enable -path=${DB_PATH} database"
 
-green "Configure the account that Vault will use to manage credentials in Postgres."
+green "Configure the DB account Vault will use to manage credentials."
 p "vault write ${DB_PATH}/config/${PGDATABASE} \\
     plugin_name=postgresql-database-plugin \\
     allowed_roles=* \\
@@ -19,18 +19,19 @@ vault write ${DB_PATH}/config/${PGDATABASE} \
     username="${VAULT_ADMIN_USER}" \
     password="${VAULT_ADMIN_PW}"
 
-green "Rotate the credentials for ${VAULT_ADMIN_USER} so no human has access to them anymore"
+green "Rotate original DB credentials so no human has access to them anymore"
+yellow "username=${VAULT_ADMIN_USER}"
+yellow "password=${VAULT_ADMIN_PW}"
 pe "vault write -force ${DB_PATH}/rotate-root/${PGDATABASE}"
 
-green "Configure the database roles for the different teams"
+green "Configure database roles for your various teams"
 echo
 
 # Just set this here as all will likely use the same one
 MAX_TTL=24h
 
 echo
-cyan "db-blog/roles/${PGDATABASE}-hr-full-1h"
-green "hr-full : The hr team will be granted full access to their schema"
+cyan "The HR team will be granted full access to their schema"
 ROLE_NAME="hr-full"
 CREATION_STATEMENT="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; 
 GRANT USAGE ON SCHEMA hr TO \"{{name}}\"; 
@@ -41,8 +42,7 @@ TTL=1m
 write_db_role
 
 echo
-cyan "db-blog/roles/${PGDATABASE}-full-read-1h"
-green "full-read : security teams can use this to scan for credentials in any schema"
+cyan "The Security teams can use this to scan for credentials in any schema"
 ROLE_NAME="full-read"
 CREATION_STATEMENT="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}';
   GRANT USAGE ON SCHEMA public,it,hr,security,finance,engineering TO \"{{name}}\"; 
@@ -53,8 +53,7 @@ TTL=1m
 write_db_role
 
 echo
-cyan "db-blog/roles/${PGDATABASE}-engineering-full-1h"
-green "engineering-full : The Eng team will be granted full access to their schema"
+cyan "The Engineering team will be granted full access to their schema"
 ROLE_NAME="engineering-full"
 CREATION_STATEMENT="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; 
 GRANT USAGE ON SCHEMA engineering TO \"{{name}}\"; 

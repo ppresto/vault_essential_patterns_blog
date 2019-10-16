@@ -1,12 +1,12 @@
 . env.sh
 
 echo
-cyan "Generate a dynamic policy to allow ldap users to manage their own credentials"
-UM_ACCESS=$(vault auth list -format=json | jq -r '.["ldap-um/"].accessor')
+cyan "Use an ACL Template to create a dynamic policy for all Users"
+UM_ACCESS=$(vault auth list -format=json | jq -r '.["ldap/"].accessor')
 MO_ACCESS=$(vault auth list -format=json | jq -r '.["ldap-mo/"].accessor')
 
 echo
-green "create policies/kv-user-template-policy.hcl"
+green "policies/kv-user-template-policy.hcl: "
 cat << EOF
 # Allow full access to the current version of the kv-blog
 path "kv-blog/data/{{identity.entity.aliases.${UM_ACCESS}.name}}/*"
@@ -129,6 +129,11 @@ path "kv-blog/metadata/{{identity.entity.aliases.${MO_ACCESS}.name}}/*"
 path "kv-blog/metadata/{{identity.entity.aliases.${MO_ACCESS}.name}}"
 {
   capabilities = ["list", "read", "delete"]
+}
+
+path "kv-blog/metadata/"
+{
+  capabilities = ["list"]
 }
 EOF
 

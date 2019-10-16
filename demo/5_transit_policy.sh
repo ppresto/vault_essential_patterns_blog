@@ -2,7 +2,7 @@
 
 # Transit Policies
 echo
-green "Create policies/transit-hr-policy.hcl"
+green "policies/transit-hr-policy.hcl: "
 cat << EOF
 path "transit-blog/encrypt/hr" {
   capabilities = [ "create", "read", "update" ]

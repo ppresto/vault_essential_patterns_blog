@@ -1,7 +1,7 @@
 . env.sh
 # DB Policies
 echo
-green "Create policies/db-hr-policy.hcl"
+green "policies/db-hr-policy.hcl: "
 cat << EOF
 path "db-blog/creds/mother-hr-full-1h" {
     capabilities = [ "read" ]

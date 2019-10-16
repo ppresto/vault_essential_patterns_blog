@@ -3,7 +3,7 @@
 # KV Policies
 
 echo
-cyan "Create policies/kv-it-policy.hcl"
+green "policies/kv-it-policy.hcl: "
 cat << EOF
 # Allow full access to the current version of the kv-blog
 path "kv-blog/data/it/*"

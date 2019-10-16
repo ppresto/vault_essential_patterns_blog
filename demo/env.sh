@@ -5,7 +5,6 @@
 case ${OSTYPE} in
   darwin*)
     IP_ADDRESS=$(ipconfig getifaddr en0)
-    echo $IP_ADDRESS
   ;;
   linux-gnu)
     IP_ADDRESS=$(ifconfig eth0 | grep inet | grep -v inet6 | awk '{print $2}')
