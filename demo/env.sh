@@ -4,7 +4,7 @@
 # Modify accordingly to run on your local system if outside these bounds
 case ${OSTYPE} in
   darwin*)
-    IP_ADDRESS=$(ipconfig getifaddr en0)
+    IP_ADDRESS=$(ipconfig getifaddr en0 || echo "127.0.0.1")
   ;;
   linux-gnu)
     IP_ADDRESS=$(ifconfig eth0 | grep inet | grep -v inet6 | awk '{print $2}')
@@ -74,7 +74,7 @@ fi
 ### FUNCTIONS ### 
 # For running psql from the postgres docker container.  
 psql () {
-docker run --rm -it --entrypoint=/usr/bin/psql \
+docker run --rm -it --net host --entrypoint=/usr/bin/psql \
   -e COLUMNS=${PGCOLUMNS} \
   -e PGHOST=${PGHOST} \
   -e PGDATABASE=${PGDATABASE} \
