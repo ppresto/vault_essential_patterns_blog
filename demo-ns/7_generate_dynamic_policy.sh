@@ -135,6 +135,7 @@ path "kv-blog/metadata/"
 {
   capabilities = ["list"]
 }
+
 EOF
 
 pe "vault policy write kv-user-template policies/kv-user-template-policy.hcl"

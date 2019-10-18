@@ -1,8 +1,11 @@
 . env.sh
 
 echo
-#cyan "Enabling Transit Secret Engine (Encryption as a Service)"
-green "Enable the Engine"
+lblue "#################################"
+lcyan "  Enable Transit Secrets (EaaS)"
+lblue "#################################"
+echo
+green "Namespace:${VAULT_NAMESPACE} - Enabling Transit Secret Engine"
 pe "vault secrets enable -path=${TRANSIT_PATH} transit"
 
 green "Create a transit key for the HR team."

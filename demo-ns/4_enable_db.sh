@@ -1,5 +1,10 @@
 . env.sh
 
+echo
+lblue "####################################"
+lcyan "  Enable Dynamic DB Secrets Engine"
+lblue "####################################"
+echo
 green "Enable the Engine"
 pe "vault secrets enable -path=${DB_PATH} database"
 
