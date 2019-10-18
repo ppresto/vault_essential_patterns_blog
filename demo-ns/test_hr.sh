@@ -2,30 +2,33 @@ shopt -s expand_aliases
 
 . env.sh
 
-echo
-lblue "##############################################"
-lcyan "  Test root & IT namespaces and polcies"
-lblue "##############################################"
 unset PGUSER PGPASSWORD
 unset VAULT_TOKEN
-echo
-cyan "The root namespace hosts our LDAP Auth, and everyones personal kv store"
-green "Login as deepak from the IT Team"
-pe "vault login -method=ldap -path=ldap username=deepak password=${USER_PASSWORD}"
+#echo
+#lblue "##############################################"
+#lcyan "  Test root & IT namespaces and polcies"
+#lblue "##############################################"
 
-echo
-green "Test our ACL template (kv-blog/deepak/*)"
-pe "vault kv put kv-blog/deepak/email password=doesntlooklikeanythingtome"
-vault kv get kv-blog/deepak/email
+#
+### IT Team Testing Root/IT Namespaces.  This can be done in UI after IT namespace creation stage.
+#
+#cyan "The root namespace hosts our LDAP Auth, and everyones personal kv store"
+#green "Login as deepak from the IT Team"
+#pe "vault login -method=ldap -path=ldap username=deepak password=${USER_PASSWORD}"
 
-echo
-green "Can we read our IT Team secrets (/kv-blog/it/*)"
-pe "vault kv get kv-blog/it/servers/hr/root"
-echo
-green "Lets switch to the IT namespace and try again"
-pe "export VAULT_NAMESPACE=\"IT\""
-pe "vault kv get kv-blog/it/servers/hr/root"
-unset VAULT_NAMESPACE
+#echo
+#green "Test our ACL template (kv-blog/deepak/*)"
+#pe "vault kv put kv-blog/deepak/email password=doesntlooklikeanythingtome"
+#vault kv get kv-blog/deepak/email
+
+#echo
+#green "Can we read our IT Team secrets (/kv-blog/it/*)"
+#pe "vault kv get kv-blog/it/servers/hr/root"
+#echo
+#green "Lets switch to the IT namespace and try again"
+#pe "export VAULT_NAMESPACE=\"IT\""
+#pe "vault kv get kv-blog/it/servers/hr/root"
+#unset VAULT_NAMESPACE
 
 echo
 lblue "####################################################"

@@ -1,9 +1,23 @@
 . env.sh
 
 echo
-lblue "###########################################"
-lcyan "  Configure Root Namespace to Manage Auth"
-lblue "###########################################"
+lblue   "###########################################"
+black   "  Setup Vault Environment"
+black   "     * Install Ent License"
+black   "     * Enable Audit Log"
+cyan    "  Configure Namespace /root"
+yellow  "    * OurCorp LDAP Auth"
+yellow  "    * K/V Store for all LDAP users"
+cyan    "  Configure Namespace /IT"
+yellow  "     * Allow IT Team to admin /IT"
+cyan    "  As IT Team create Sub-Namespace /IT/hr"
+yellow  "    * Enable hr app team access"
+yellow  "    * Enable Transit (EaaS)"
+yellow  "    * Enable DB Engine (Dynamic Secrets)"
+cyan    "  Demo Vault Services"
+lblue   "###########################################"
+p
+
 echo
 green "Enable LDAP Auth Method"
 ./6_enable_ldap_auth.sh
@@ -50,10 +64,23 @@ hr_groupid=$(vault write -format=json identity/group name="egroup_hr" type="exte
 pe "vault write -format=json identity/group-alias name="hr" mount_accessor=$accessor canonical_id=$hr_groupid"
 
 echo
-lblue "################################################"
-lcyan "  Configure sub-namespace IT/hr for hr app team"
-lblue "################################################"
-echo
+lblue   "###########################################"
+black   "  Setup Vault Environment"
+black   "     * Install Ent License"
+black   "     * Enable Audit Log"
+black   "  Configure Namespace /root"
+black   "    * OurCorp LDAP Auth"
+black   "    * K/V Store for all LDAP users"
+black   "  Configure Namespace /IT"
+black   "     * Allow IT Team to admin /IT"
+cyan    "  As IT Team create Sub-Namespace /IT/hr"
+yellow  "    * Enable hr app team access"
+yellow  "    * Enable Transit (EaaS)"
+yellow  "    * Enable DB Engine (Dynamic Secrets)"
+cyan    "  Demo Vault Services"
+lblue   "###########################################"
+p
+
 cyan "Deepak from IT will setup a new namespace for the hr app team"
 unset VAULT_TOKEN
 vault login -method=ldap -path=ldap username=deepak password=thispasswordsucks

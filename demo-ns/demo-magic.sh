@@ -42,6 +42,7 @@ PURPLE="\033[0;35m"
 LPURPLE="\033[1;35m"
 YELLOW="\033[0;33m"
 WHITE="\033[1;37m"
+GRAY="\033[1:90m"
 COLOR_RESET="\033[0m"
 
 green () {
@@ -81,6 +82,15 @@ blue () {
 }
 lblue () {
   echo -e "${LBLUE}$@${COLOR_RESET}"
+}
+black () {
+  echo -e "${BLACK}$@${COLOR_RESET}"
+}
+gray () {
+  echo -e "${GRAY}$@${COLOR_RESET}"
+}
+white () {
+  echo -e "${WHITE}$@${COLOR_RESET}"
 }
 
 ##

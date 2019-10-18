@@ -2,7 +2,7 @@
 
 echo
 lblue "###########################################"
-lcyan "  Configure Policies"
+lcyan "  Configure Global Policies"
 lblue "###########################################"
 echo
 

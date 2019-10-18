@@ -19,13 +19,20 @@ fi
 
 echo
 lblue "###########################################"
-lcyan "  Setup Vault Environment"
-lcyan "  Configure Vault Services"
-cyan  "    * LDAP Provider"
-cyan  "    * K/V Engine"
-cyan  "    * Transit (Encryption as a Service)"
-cyan  "    * DB Engine (Dynamic Secrets)"
-lcyan "  Demo Vault Services"
+cyan "  Setup Vault Environment"
+yellow "     * Install Ent License"
+yellow "     * Enable Audit Log"
+yellow "     * Configure Global Policies"
+cyan "  Configure Namespace /root"
+yellow  "    * OurCorp LDAP Auth"
+yellow  "    * K/V Store for all LDAP users"
+cyan "  Configure Namespace /IT"
+yellow "     * Allow IT Team to admin /IT"
+cyan "  As IT Team create Sub-Namespace /IT/hr"
+yellow  "    * Enable hr app team access"
+yellow  "    * Enable Transit (EaaS)"
+yellow  "    * Enable DB Engine (Dynamic Secrets)"
+cyan "  Demo Vault Services"
 lblue "###########################################"
 echo
 p
@@ -37,7 +44,7 @@ yellow "export VAULT_TOKEN=notsosecure"
 yellow "export VAULT_ADDR=\"http://${IP_ADDRESS}:8200\""
 
 vault status
-#open "http://${IP_ADDRESS}:8200"
+open "http://${IP_ADDRESS}:8200"
 
 echo
 vault read sys/license
@@ -55,11 +62,15 @@ pe "vault audit enable file file_path=/tmp/vault_audit.log"
 
 echo
 cyan "Tail Vault Audit Log"
-#${DIR}/launch_iterm.sh /tmp "tail -f /tmp/vault_audit.log | jq " &
+${DIR}/launch_iterm.sh /tmp "tail -f /tmp/vault_audit.log | jq " &
 echo
+
+# Global Policies
+./9_egp_policies.sh
 
 # Configure Namespace /root, /IT.  As IT team configure /IT/hr
 ./3_config_ns_main.sh
+
 
 # Populate IT Data for Validation Testing
 vault kv put kv-blog/deepak/email password=doesntlooklikeanythingtome
@@ -68,10 +79,23 @@ vault kv put kv-blog/it/servers/hr/root password=rootntootn
 unset VAULT_NAMESPACE
 
 echo
-lblue "#"
-lcyan "###  Testing Time"
-lblue "#"
-echo
+lblue   "###########################################"
+black   "  Setup Vault Environment"
+black   "     * Install Ent License"
+black   "     * Enable Audit Log"
+black   "  Configure Namespace /root"
+black   "    * OurCorp LDAP Auth"
+black   "    * K/V Store for all LDAP users"
+black   "  Configure Namespace /IT"
+black   "     * Allow IT Team to admin /IT"
+black   "  As IT Team create Sub-Namespace /IT/hr"
+black   "    * Enable hr app team access"
+black   "    * Enable Transit (EaaS)"
+black   "    * Enable DB Engine (Dynamic Secrets)"
+cyan    "  Demo Vault Services"
+lblue   "###########################################"
+p
+
 ./test_hr.sh
 
 echo
