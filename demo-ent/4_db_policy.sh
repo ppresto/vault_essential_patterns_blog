@@ -9,5 +9,5 @@ path "db-blog/creds/mother-hr-full-1h" {
 EOF
 
 pe "vault policy write db-hr policies/db-hr-policy.hcl"
-vault policy write db-full-read policies/db-full-read-policy.hcl
-vault policy write db-engineering policies/db-engineering-policy.hcl
+#vault policy write db-full-read policies/db-full-read-policy.hcl
+#vault policy write db-engineering policies/db-engineering-policy.hcl

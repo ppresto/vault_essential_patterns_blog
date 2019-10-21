@@ -39,7 +39,7 @@ lcyan "  Configure a new Namespace for the IT Team"
 lblue "#############################################"
 echo
 
-vault namespace create IT
+pe "vault namespace create IT"
 vault secrets enable -namespace=IT -path=kv-blog -version=2 kv
 vault policy write -namespace=IT kv-blog policies/kv-blog-it-policy.hcl
 vault policy write -namespace=IT it-admin policies/it-admin.hcl
@@ -61,7 +61,7 @@ vault write -namespace=IT identity/group name="igroup_it" policies="kv-blog,it-a
 # "Create Ext/Int Group for IT/hr"
 #accessor=$(vault auth list -format=json | jq -r '.["ldap/"].accessor')
 hr_groupid=$(vault write -format=json identity/group name="egroup_hr" type="external" | jq -r ".data.id")
-pe "vault write -format=json identity/group-alias name="hr" mount_accessor=$accessor canonical_id=$hr_groupid"
+pe "vault write -format=json identity/group-alias name=\"hr\" mount_accessor=$accessor canonical_id=$hr_groupid"
 
 echo
 lblue   "###########################################"
@@ -83,7 +83,7 @@ p
 
 cyan "Deepak from IT will setup a new namespace for the hr app team"
 unset VAULT_TOKEN
-vault login -method=ldap -path=ldap username=deepak password=thispasswordsucks
+pe "vault login -method=ldap -path=ldap username=deepak password=thispasswordsucks"
 
 #export VAULT_NAMESPACE=IT
 vault namespace create -namespace=IT hr

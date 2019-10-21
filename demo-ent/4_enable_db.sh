@@ -45,25 +45,25 @@ write_db_role_debug
 TTL=1m
 write_db_role
 
-echo
-cyan "The Security teams can use this to scan for credentials in any schema"
-ROLE_NAME="full-read"
-CREATION_STATEMENT="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}';
-  GRANT USAGE ON SCHEMA public,it,hr,security,finance,engineering TO \"{{name}}\"; 
-  GRANT SELECT ON ALL TABLES IN SCHEMA public,it,hr,security,finance,engineering TO \"{{name}}\";"
-TTL=1h
-write_db_role
-TTL=1m
-write_db_role
+#echo
+#cyan "The Security teams can use this to scan for credentials in any schema"
+#ROLE_NAME="full-read"
+#CREATION_STATEMENT="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}';
+#  GRANT USAGE ON SCHEMA public,it,hr,security,finance,engineering TO \"{{name}}\"; 
+#  GRANT SELECT ON ALL TABLES IN SCHEMA public,it,hr,security,finance,engineering TO \"{{name}}\";"
+#TTL=1h
+##write_db_role
+#TTL=1m
+#write_db_role
 
-echo
-cyan "The Engineering team will be granted full access to their schema"
-ROLE_NAME="engineering-full"
-CREATION_STATEMENT="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; 
-GRANT USAGE ON SCHEMA engineering TO \"{{name}}\"; 
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA engineering TO \"{{name}}\";"
-TTL=1h
-write_db_role
-TTL=1m
-write_db_role
+#echo
+#cyan "The Engineering team will be granted full access to their schema"
+#ROLE_NAME="engineering-full"
+#CREATION_STATEMENT="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; 
+#GRANT USAGE ON SCHEMA engineering TO \"{{name}}\"; 
+#GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA engineering TO \"{{name}}\";"
+#TTL=1h
+#write_db_role
+#TTL=1m
+#write_db_role
 

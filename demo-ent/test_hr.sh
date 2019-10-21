@@ -39,9 +39,23 @@ green "Login as frank who is on the HR Team"
 unset VAULT_TOKEN
 pe "vault login -method=ldap -path=ldap username=frank password=${USER_PASSWORD}"
 
+echo
 green "Test our ACL template (kv-blog/frank/*)"
 pe "vault kv put kv-blog/frank/email password=doesntlooklikeanythingtome"
 
+echo
+green "Test DB Default Credentials"
+export PGUSER=${VAULT_ADMIN_USER}
+export PGPASSWORD=${VAULT_ADMIN_PW}
+yellow "export PGUSER=${PGUSER}"
+yellow "export PGPASSWORD=${PGPASSWORD}"
+echo
+set -o noglob
+pe "QUERY='select email,id from hr.people;'"
+pe "psql"
+red "This should fail - We had vault rotate these earlier"
+
+echo
 green "Read HR Dynamic DB credentials"
 pe "export VAULT_NAMESPACE=\"IT/hr\""
 echo
@@ -118,10 +132,10 @@ echo
 yellow "Write kv secrets to another LDAP users path"
 pe "vault kv put kv-blog/deepak/email password=doesntlooklikeanythingtome"
 
+yellow "Can the Vault token read IT kv secrets?"
+pe "vault kv get kv-blog/it/servers/hr/root"
+
 yellow "Try to query the engineering schema from here."
 pe "QUERY=\"select * from engineering.catalog\""
 psql
 
-yellow "Can the Vault token read IT kv secrets?"
-#pe "vault read db-blog/creds/mother-full-read-1h"
-pe "vault kv get kv-blog/it/servers/hr/root"
