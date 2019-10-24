@@ -131,10 +131,11 @@ red "#"
 echo
 yellow "Write kv secrets to another LDAP users path"
 pe "vault kv put kv-blog/deepak/email password=doesntlooklikeanythingtome"
-
-yellow "Can the Vault token read IT kv secrets?"
-pe "vault kv get kv-blog/it/servers/hr/root"
-
+echo
+yellow "Can Frank store a poor AWS Secret?"
+pe "vault kv put kv-blog/frank/aws/config/root access_key=AAAAABBBBBCCCCCDDDDD secret_key=myfavoritepassword"
+pe "vault kv put kv-blog/frank/aws/config/root access_key=AAAAABBBBBCCCCCDDDDD secret_key=AAAAABBBBBCCCCCDDDDDAAAAABBBBBCCCCCDDDDD"
+echo
 yellow "Try to query the engineering schema from here."
 pe "QUERY=\"select * from engineering.catalog\""
 psql
